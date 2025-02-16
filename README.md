@@ -82,7 +82,7 @@ dataset = RedisJsonArrayDataset(redis, "my_json_object", "$.my_array")
 ### RedisJsonObjectDataset
 
 This dataset class is used to fetch data from multiple Redis JSON Object. Each JSON object stored as different keys is considered as a sample.
-Since each sample is fetched from different key, you need to specify the key mapping function and length function in the constructor.
+Since each sample is fetched from different key, you need to specify an index to key mapping function and length function in the constructor.
 
 ```python
 from upstash_dataset import RedisJsonObjectDataset
@@ -93,7 +93,7 @@ dataset = RedisJsonObjectDataset(redis, "my_json_object", key_mapping=lambda x: 
 ### RedisStringDataset
 
 This dataset class is used to fetch data from multiple Redis strings. Each string stored as different keys is considered as a sample.
-Since each sample is fetched from different key, you need to specify the key mapping function and length function in the constructor.
+Since each sample is fetched from different key, you need to specify an index to key mapping function and length function in the constructor.
 
 ```python
 from upstash_dataset import RedisStringDataset
@@ -104,7 +104,7 @@ dataset = RedisStringDataset(redis, "my_json_object", key_mapping=lambda x: f'js
 ### VectorDataset
 
 This dataset class is used to fetch data from a vector database. Each vector in the database is considered as a sample.
-Since the IDs of vectors are not sequential, you need to specify an ID mapping function.
+Since the IDs of vectors are not sequential, you need to specify an index to ID mapping function.
 
 ```python
 from upstash_dataset import VectorDataset

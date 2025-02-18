@@ -1,8 +1,8 @@
 # Upstash Dataset
 
-This library provides PyTorch-compatible dataset classes for Upstash products, enabling efficient training and evaluation of deep learning models.
-The dataset classes inherit from PyTorch's Dataset class, allowing seamless integration with DataLoader and Hugging Face's Trainer.
-Since data is fetched in real-time batches using pipelines, this library is ideal for training on large datasets that cannot fit into memory.
+Upstash Dataset provides a seamless way to stream data from Upstash directly into PyTorch and Hugging Face workflows.
+Built on PyTorch’s `Dataset` abstract class, it ensures native compatibility with `DataLoader` and Hugging Face’s `Trainer`, allowing efficient data loading without the need to pre-download or store datasets in memory.
+By fetching data in real-time using pipelines, it enables parallelized model training and evaluation, making it ideal for large-scale and dynamic datasets.
 
 ## Installation
 
@@ -37,7 +37,7 @@ trainer = Trainer(
 
 ## Available dataset classes
 
-5 Most common data organization patterns in redis have been implemented as dataset classes:
+The five most common data organization patterns in redis have been implemented as dataset classes:
 
 - RedisListDataset
 - RedisSortedSetDataset
@@ -45,7 +45,7 @@ trainer = Trainer(
 - RedisJsonObjectDataset
 - RedisStringDataset
 
-Also, one dataset class for vector database has been implemented:
+Additionally, a dataset class for vector databases has been implemented, enabling seamless integration with embedding-based models—a common practice for designing models for downstream tasks such as retrieval, classification, and clustering.
 
 - VectorDataset
 
@@ -81,8 +81,8 @@ dataset = RedisJsonArrayDataset(redis, "my_json_object", "$.my_array")
 
 ### RedisJsonObjectDataset
 
-This dataset class is used to fetch data from multiple Redis JSON Object. Each JSON object stored as different keys is considered as a sample.
-Since each sample is fetched from different key, you need to specify an index to key mapping function and length function in the constructor.
+This dataset class is used to fetch data from multiple Redis JSON objects. Each JSON object stored as different keys is considered as a sample.
+Since each sample is fetched from different key, you need to specify an index-to-key mapping function and a length function in the constructor.
 
 ```python
 from upstash_dataset import RedisJsonObjectDataset
@@ -93,18 +93,18 @@ dataset = RedisJsonObjectDataset(redis, "my_json_object", key_mapping=lambda x: 
 ### RedisStringDataset
 
 This dataset class is used to fetch data from multiple Redis strings. Each string stored as different keys is considered as a sample.
-Since each sample is fetched from different key, you need to specify an index to key mapping function and length function in the constructor.
+Since each sample is fetched from different key, you need to specify an index-to-key mapping function and a length function in the constructor.
 
 ```python
 from upstash_dataset import RedisStringDataset
 
-dataset = RedisStringDataset(redis, "my_json_object", key_mapping=lambda x: f'json_object_{x+1}', length_function=my_length_function)
+dataset = RedisStringDataset(redis, key_mapping=lambda x: f'string_{x+1}', length_function=my_length_function)
 ```
 
 ### VectorDataset
 
 This dataset class is used to fetch data from a vector database. Each vector in the database is considered as a sample.
-Since the IDs of vectors are not sequential, you need to specify an index to ID mapping function.
+Since the IDs of vectors are not sequential, you need to specify an index-to-ID mapping function.
 
 ```python
 from upstash_dataset import VectorDataset
